@@ -12,11 +12,14 @@ Static site: `index.html` + `data.js`. No build step, no external requests.
 
 ---
 
-© 2026 Bao Yan. All rights reserved.
+© 2026 Bao Yan Chan Monastery, Bao Yan Mountain. All rights reserved.
 
-Dharma teachings by Venerable Jian Hui. English translation prepared by the Diamond Sutra
-translation group; sutra passages follow the renderings used in the source drafts, which credit
-Buddha's Light Publishing (Fo Guang Shan) as a reference.
+- **Author:** Venerable Shi Jian Hui
+- **Translation:** Sutra Translation Institute, Bao Yan Chan Monastery
+- **Published and distributed by:** Bao Yan Chan Monastery, Bao Yan Mountain
+
+Sutra passages follow the renderings used in the source drafts, which credit Buddha's Light
+Publishing (Fo Guang Shan) as a reference.
 
 These are working drafts, not a final published edition. Freely readable for personal study and
 Dharma circulation; no commercial use, reprinting or redistribution without written permission.
