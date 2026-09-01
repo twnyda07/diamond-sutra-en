@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>The Diamond Sutra — Reading Dashboard</title>
+<style>
+:root{
+  --paper:#FBFAF7; --paper2:#F5F3ED; --ink:#1E1C1A; --ink2:#453F3A; --ink3:#7B746B;
+  --line:#E3DED4; --line2:#EFEBE3; --sutra:#8A3B2E; --sutraBg:#FBF4F1;
+  --accent:#3B5661; --accentBg:#F1F5F6; --mark:#F7E7BC;
+  --fs:20px;
+}
+*{box-sizing:border-box;-webkit-text-size-adjust:100%}
+html,body{margin:0;padding:0}
+body{
+  background:var(--paper); color:var(--ink);
+  font-family:Georgia,"Iowan Old Style","Palatino Linotype",Palatino,"Times New Roman",serif;
+  font-size:var(--fs); line-height:1.78;
+}
+body::before{content:"";position:fixed;inset:0;z-index:-1;pointer-events:none;
+  background:
+   radial-gradient(60% 45% at 12% 8%, rgba(60,80,90,.055), transparent 70%),
+   radial-gradient(48% 40% at 92% 22%, rgba(120,90,70,.05), transparent 72%),
+   radial-gradient(70% 50% at 70% 96%, rgba(60,80,90,.045), transparent 70%),
+   radial-gradient(40% 30% at 30% 62%, rgba(90,90,90,.03), transparent 70%)}
+button{font-family:inherit;font-size:inherit;color:inherit;background:none;border:0;cursor:pointer}
+
+.wrap{display:flex;min-height:100vh}
+aside{width:310px;flex:0 0 310px;border-right:1px solid var(--line);background:rgba(255,255,255,.55);
+  position:sticky;top:0;height:100vh;overflow:auto;backdrop-filter:blur(6px)}
+main{flex:1;min-width:0;padding:0 0 8rem}
+.inner{max-width:52rem;margin:0 auto;padding:0 2.2rem}
+
+.brand{padding:1.7rem 1.3rem 1rem;border-bottom:1px solid var(--line2)}
+.brand h1{margin:0;font-size:1.42rem;line-height:1.35;font-weight:600;letter-spacing:.01em}
+.brand .sub{font-size:.76rem;color:var(--ink3);letter-spacing:.14em;margin-top:.45rem;
+  text-transform:uppercase;line-height:1.7;font-family:system-ui,sans-serif}
+.searchbox{padding:.85rem 1.1rem;border-bottom:1px solid var(--line2)}
+.searchbox input{width:100%;padding:.6rem .8rem;font-size:.92rem;font-family:system-ui,sans-serif;
+  border:1px solid var(--line);border-radius:.5rem;background:#fff;color:var(--ink)}
+.searchbox input:focus{outline:2px solid var(--accentBg);border-color:var(--accent)}
+nav{padding:.5rem 0 3rem}
+nav .item{display:flex;gap:.7rem;width:100%;text-align:left;padding:.55rem 1.1rem .55rem 1.2rem;
+  font-size:.98rem;line-height:1.5;border-left:3px solid transparent;color:var(--ink2);align-items:baseline}
+nav .item:hover{background:var(--paper2)}
+nav .item.on{background:#fff;border-left-color:var(--sutra);color:var(--ink);font-weight:600}
+nav .item .n{flex:0 0 2.1em;color:var(--ink3);font-size:.8em;font-family:system-ui,sans-serif;letter-spacing:.06em}
+nav .item.on .n{color:var(--sutra)}
+nav .grp{padding:1.1rem 1.2rem .4rem;font-size:.7rem;letter-spacing:.2em;color:var(--ink3);
+  text-transform:uppercase;font-family:system-ui,sans-serif}
+
+.topbar{position:sticky;top:0;z-index:20;background:rgba(251,250,247,.94);backdrop-filter:blur(8px);
+  border-bottom:1px solid var(--line)}
+.topbar .inner{display:flex;align-items:center;gap:.8rem;padding-top:.65rem;padding-bottom:.65rem;flex-wrap:wrap}
+.tabs{display:flex;gap:.25rem;flex:1;flex-wrap:wrap}
+.tab{padding:.4rem 1rem;border-radius:2rem;font-size:.95rem;color:var(--ink3);border:1px solid transparent;
+  font-family:system-ui,sans-serif;letter-spacing:.02em}
+.tab:hover{background:var(--paper2)}
+.tab.on{background:#fff;border-color:var(--line);color:var(--sutra);font-weight:600}
+.tools{display:flex;gap:.35rem;align-items:center}
+.tool{padding:.33rem .68rem;border:1px solid var(--line);border-radius:.45rem;font-size:.8rem;
+  color:var(--ink3);background:#fff;font-family:system-ui,sans-serif}
+.tool:hover{background:var(--paper2)}
+
+.chead{padding:2.5rem 0 1.3rem;border-bottom:1px solid var(--line2)}
+.chead .num{font-size:.74rem;letter-spacing:.22em;color:var(--ink3);text-transform:uppercase;
+  font-family:system-ui,sans-serif}
+.chead h2{margin:.55rem 0 .3rem;font-size:2.2rem;line-height:1.25;font-weight:600;letter-spacing:-.01em}
+.chead .tnote{color:var(--ink3);font-size:.9rem;font-style:italic}
+.verse{margin:1.5rem 0 .3rem;border-left:3px solid #E9D9D2;padding:.2rem 0 .2rem 1.1rem}
+.verse div{color:var(--sutra);font-size:1.02rem;line-height:1.85;font-style:italic}
+.srcline{font-size:.82rem;color:var(--ink3);line-height:1.75;margin-top:1rem;font-family:system-ui,sans-serif}
+.srcline code{background:var(--paper2);padding:.1rem .4rem;border-radius:.3rem;
+  font-family:ui-monospace,Menlo,monospace;font-size:.9em;color:var(--ink2)}
+
+section{padding-top:1.2rem}
+h3.sec{font-size:.8rem;letter-spacing:.2em;color:var(--ink3);font-weight:600;margin:2.3rem 0 1rem;
+  padding-bottom:.5rem;border-bottom:1px solid var(--line2);text-transform:uppercase;
+  font-family:system-ui,sans-serif}
+.guide{font-size:1.04em;line-height:1.95}
+.guide p{margin:0 0 1.05em}
+.keys{display:flex;flex-wrap:wrap;gap:.5rem;margin:1.1rem 0 0}
+.key{background:var(--accentBg);color:var(--accent);border:1px solid #DEE7E9;border-radius:2rem;
+  padding:.3rem .9rem;font-size:.85rem;font-family:system-ui,sans-serif}
+
+.blk{padding:.5rem 0;position:relative;scroll-margin-top:6rem;border-radius:.35rem;line-height:1.85}
+.blk .anchor{color:var(--ink3);opacity:.42;font-size:.7rem;font-family:ui-monospace,Menlo,monospace;
+  margin-right:.55rem;letter-spacing:0}
+.blk:hover .anchor{opacity:.9}
+.blk.hit{background:var(--mark);box-shadow:0 0 0 .55rem var(--mark);animation:fade 3.6s forwards}
+@keyframes fade{0%,55%{background:var(--mark);box-shadow:0 0 0 .55rem var(--mark)}
+ 100%{background:transparent;box-shadow:none}}
+.blk.heading{margin-top:1.8rem}
+.blk.heading .tx{font-size:1.14rem;font-weight:600;line-height:1.5;border-left:4px solid var(--sutra);
+  padding-left:.8rem;display:block}
+.blk.sutra{background:var(--sutraBg);border:1px solid #F1E4DE;border-radius:.65rem;
+  padding:1rem 1.25rem;margin:1rem 0}
+.blk.sutra .tx{color:var(--sutra);font-size:1.03em;line-height:1.95}
+.blk.verse .tx{color:var(--sutra);font-style:italic}
+.blk.gap .tx{color:var(--ink3);font-style:italic;font-size:.85em}
+.blk .tx{white-space:pre-wrap}
+
+.qa{border:1px solid var(--line);background:rgba(255,255,255,.62);border-radius:.75rem;
+  margin:0 0 .9rem;overflow:hidden}
+.qa summary{list-style:none;cursor:pointer;padding:1rem 1.25rem;font-size:1.06rem;font-weight:600;
+  line-height:1.55;display:flex;gap:.75rem;align-items:baseline}
+.qa summary::-webkit-details-marker{display:none}
+.qa summary:hover{background:var(--paper2)}
+.qa summary .q{color:var(--sutra);font-size:.72em;flex:0 0 auto;font-family:system-ui,sans-serif;
+  letter-spacing:.1em;text-transform:uppercase}
+.qa[open] summary{border-bottom:1px solid var(--line2);background:var(--paper2)}
+.qa .body{padding:1rem 1.25rem 1.2rem}
+.qa .body p{margin:0 0 .8em;line-height:1.9}
+.refs{margin-top:.85rem;display:flex;flex-wrap:wrap;gap:.4rem;align-items:center}
+.refs .lbl{font-size:.72rem;color:var(--ink3);letter-spacing:.14em;text-transform:uppercase;
+  font-family:system-ui,sans-serif}
+.ref{border:1px solid #DEE7E9;background:var(--accentBg);color:var(--accent);border-radius:.4rem;
+  padding:.16rem .58rem;font-size:.78rem;font-family:ui-monospace,Menlo,monospace}
+.ref:hover{background:var(--accent);color:#fff}
+.note{background:#FFFCF2;border:1px solid #F0E6C8;border-radius:.65rem;padding:.95rem 1.15rem;
+  font-size:.92em;line-height:1.8;color:var(--ink2);margin:1.1rem 0}
+.note b{color:#87671C}
+.pending{color:var(--ink3);background:var(--paper2);border:1px dashed var(--line);
+  border-radius:.65rem;padding:1.3rem;text-align:center;font-size:.95em;line-height:1.8}
+
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(15rem,1fr));gap:1rem;margin-top:1.3rem}
+.card{border:1px solid var(--line);background:rgba(255,255,255,.62);border-radius:.75rem;
+  padding:1rem 1.15rem;text-align:left;transition:.15s;display:block;width:100%}
+.card:hover{border-color:var(--sutra);background:#fff;transform:translateY(-2px)}
+.card .n{font-size:.68rem;letter-spacing:.2em;color:var(--ink3);text-transform:uppercase;
+  font-family:system-ui,sans-serif}
+.card h4{margin:.4rem 0 .55rem;font-size:1.08rem;font-weight:600;line-height:1.4}
+.card .dt{font-size:.7rem;color:var(--ink3);letter-spacing:.04em;font-family:system-ui,sans-serif}
+.card .dt b{color:var(--sutra);font-weight:600}
+.lead{font-size:1.02em;line-height:1.95;color:var(--ink2);max-width:42rem}
+
+.res{border-bottom:1px solid var(--line2);padding:.95rem 0;display:block;width:100%;text-align:left}
+.res:hover{background:var(--paper2)}
+.res .h{font-size:.76rem;color:var(--sutra);letter-spacing:.08em;text-transform:uppercase;
+  font-family:system-ui,sans-serif}
+.res .t{margin-top:.3rem;line-height:1.8;color:var(--ink2);font-size:.95em}
+.res mark{background:var(--mark);color:var(--ink);padding:0 .1em}
+.hint{color:var(--ink3);font-size:.94em}
+footer{margin-top:4rem;border-top:1px solid var(--line);padding:1.6rem 0 0;
+  font-family:system-ui,sans-serif;font-size:.8rem;line-height:1.85;color:var(--ink3)}
+footer b{color:var(--ink2);font-weight:600}
+footer .c{font-size:.86rem;color:var(--ink2);margin-bottom:.55rem}
+footer ul{margin:.5rem 0 0;padding-left:1.1rem}
+footer li{margin:.15rem 0}
+.menu-btn{display:none}
+@media(max-width:900px){
+  aside{position:fixed;left:0;top:0;z-index:60;transform:translateX(-100%);transition:.22s;
+    box-shadow:0 0 3rem rgba(0,0,0,.12)}
+  aside.open{transform:none}
+  .menu-btn{display:block}
+  .inner{padding:0 1.2rem}
+  .topbar .inner{gap:.55rem}
+  .tabs{order:3;flex:0 0 100%;flex-wrap:nowrap;overflow-x:auto;padding-bottom:.1rem}
+  .tab{flex:0 0 auto}
+  .tools{margin-left:auto}
+  .chead h2{font-size:1.75rem}
+  :root{--fs:19px}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+<aside id="side">
+  <div class="brand">
+    <h1>The Diamond Sutra</h1>
+    <div class="sub">Vajra Prajnaparamita · Reading Dashboard</div>
+  </div>
+  <div class="searchbox"><input id="q" type="search" placeholder="Search the whole text, guides and Q&amp;A"></div>
+  <nav id="nav"></nav>
+</aside>
+
+<main>
+  <div class="topbar"><div class="inner">
+    <button class="menu-btn tool" onclick="document.getElementById('side').classList.toggle('open')">Contents</button>
+    <div class="tabs" id="tabs"></div>
+    <div class="tools">
+      <button class="tool" onclick="fs(-1)">A−</button>
+      <button class="tool" onclick="fs(1)">A+</button>
+    </div>
+  </div></div>
+  <div class="inner" id="view"></div>
+  <div class="inner"><footer>
+    <div class="c"><b>© 2026 Bao Yan. All rights reserved.</b></div>
+    <div>Dharma teachings by Venerable Jian Hui. English translation prepared by the Diamond Sutra
+    translation group; sutra passages follow the renderings used in the source drafts, which credit
+    Buddha's Light Publishing (Fo Guang Shan) as a reference. This dashboard reproduces the English
+    text of those drafts and adds editorial guides and questions.</div>
+    <ul>
+      <li>Working drafts, not a final published edition: wording, section titles and untranslated
+          gaps reflect the state of each file on its stated date.</li>
+      <li>Freely readable for personal study and Dharma circulation. No commercial use, reprinting
+          or redistribution without written permission.</li>
+      <li>Guides and Q&amp;A are editorial summaries of the drafts, each citing the paragraph it rests on.</li>
+    </ul>
+  </footer></div>
+</main>
+</div>
+
+<script src="data.js"></script>
+<script>
+const D=window.SUTRA_DATA, CH=D.chapters;
+let state={ci:-1,tab:'guide',q:''};
+const $=s=>document.querySelector(s);
+const esc=s=>(s||'').replace(/[&<>]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;'}[c]));
+
+function buildNav(){
+  let h='<button class="item" data-c="-1"><span class="n">◈</span><span>Overview</span></button>'
+       +'<div class="grp">Thirty-two Sections</div>';
+  CH.forEach(c=>{
+    h+=`<button class="item" data-c="${c.i}"><span class="n">${c.num===0?'Pref':c.num}</span><span>${esc(c.title)}</span></button>`;
+  });
+  $('#nav').innerHTML=h;
+  $('#nav').onclick=e=>{const b=e.target.closest('.item');if(!b)return;
+    go(+b.dataset.c);document.getElementById('side').classList.remove('open');};
+}
+function markNav(){document.querySelectorAll('#nav .item').forEach(b=>b.classList.toggle('on',+b.dataset.c===state.ci));}
+
+const TABS=[['guide','Guide'],['sutra','Sutra text'],['qa','Q&A'],['full','Full text']];
+function buildTabs(){
+  if(state.ci<0){$('#tabs').innerHTML='';return;}
+  $('#tabs').innerHTML=TABS.map(([k,n])=>`<button class="tab ${state.tab===k?'on':''}" data-t="${k}">${n}</button>`).join('');
+  $('#tabs').onclick=e=>{const b=e.target.closest('.tab');if(!b)return;state.tab=b.dataset.t;render();};
+}
+function fs(d){let v=parseFloat(localStorage.getItem('fs')||20)+d;v=Math.max(16,Math.min(28,v));
+  localStorage.setItem('fs',v);document.documentElement.style.setProperty('--fs',v+'px');}
+
+function blockHTML(b,i){
+  if(b.gap) return `<div class="blk gap" id="b${i}"><span class="anchor">§${i}</span><span class="tx">[this paragraph is present in the source file but has no English translation yet]</span></div>`;
+  const cls='blk '+(b.t==='heading'?'heading':b.t==='sutra'?'sutra':b.t==='verse'?'verse':'para');
+  return `<div class="${cls}" id="b${i}"><span class="anchor">§${i}</span><span class="tx">${esc(b.en)}</span></div>`;
+}
+function srcLine(c){
+  const pct=Math.round(100*c.nEn/c.nBlk);
+  return `<div class="srcline">Source file, dated ${c.date} — the most recent draft in this section's folder, named in Drive as
+   <code>${esc(c.file)}</code>. The English is reproduced as written there; ${pct}% of its paragraphs carry an English translation.
+   Every paragraph below is numbered <code>§n</code>, and the <code>§n</code> chips in the guide and Q&amp;A jump straight to it.</div>`;
+}
+function head(c){
+  return `<div class="chead">
+    <div class="num">${esc(c.label)} · ${c.date}</div>
+    <h2>${esc(c.title)}</h2>
+    ${c.tnote?`<div class="tnote">${esc(c.tnote)}</div>`:''}
+    ${c.verse.length?`<div class="verse">${c.verse.map(v=>`<div>${esc(v)}</div>`).join('')}</div>
+      <div class="srcline" style="margin-top:.35rem">Summarising verse, as translated in the source file.</div>`:''}
+    ${srcLine(c)}
+  </div>`;
+}
+function renderGuide(c){
+  let h='<section>';
+  if(!c.guide){h+=`<div class="pending">The guide and Q&amp;A for this section are still being written from the latest English draft.<br>
+    The <b>Sutra text</b> and <b>Full text</b> tabs are already complete — you can read those now.</div>`;}
+  else{
+    h+='<h3 class="sec">Guide</h3><div class="guide"><p>'+esc(c.guide)+'</p></div>';
+    if(c.note)h+=`<div class="note"><b>About this draft: </b>${esc(c.note)}</div>`;
+    if(c.keys.length)h+='<h3 class="sec">Key points</h3><div class="keys">'
+      +c.keys.map(k=>`<span class="key">${esc(k)}</span>`).join('')+'</div>';
+  }
+  return h+'</section>';
+}
+function renderSutra(c){
+  let h='<section><h3 class="sec">Sutra text of this section</h3>';
+  if(!c.sutra.length)h+='<div class="pending">This piece is the preface; it has no sutra passage of its own.</div>';
+  c.sutra.forEach(s=>{h+=`<div class="blk sutra"><span class="tx">${esc(s)}</span></div>`;});
+  return h+'</section>';
+}
+function renderQA(c){
+  if(!c.qa.length)return '<section><div class="pending">The Q&amp;A for this section is still being written.</div></section>';
+  let h='<section><h3 class="sec">Questions &amp; answers — each cites the source paragraphs</h3>';
+  c.qa.forEach((q,k)=>{
+    h+=`<details class="qa"${k===0?' open':''}><summary><span class="q">Q${k+1}</span><span>${esc(q.q)}</span></summary><div class="body">`
+     +`<p>${esc(q.a)}</p>`
+     +`<div class="refs"><span class="lbl">Source</span>${(q.refs||[]).map(r=>`<button class="ref" data-goto="${r}">§${r}</button>`).join('')}</div>`
+     +'</div></details>';
+  });
+  return h+'</section>';
+}
+function renderFull(c){
+  return '<section><h3 class="sec">Full text, paragraph by paragraph</h3>'
+   +c.blocks.map((b,i)=>blockHTML(b,i)).join('')+'</section>';
+}
+function renderOverview(){
+  const done=CH.filter(c=>c.guide).length;
+  let h=`<div class="chead"><div class="num">English edition · built only from the folder you gave</div>
+   <h2>The Diamond Sutra</h2>
+   <div class="tnote">Vajra Prajnaparamita — a reading dashboard with guides, Q&amp;A and traceable sources</div>
+   <div class="srcline">Single source of truth: the Google Drive folder <code>${esc(D.source.name)}</code> — ${D.source.dirs} folders, ${D.source.files} files.
+   Each section uses the <b>most recent dated draft</b> in its folder; the filename and date are shown at the top of every section.
+   Only the English of those files is published here. Every paragraph is numbered, so anything said in a guide or an answer can be checked against the source.</div></div>
+   <p class="lead">Pick the preface or any of the thirty-two sections on the left. Each has four tabs:
+   <b>Guide</b> (what the section is doing), <b>Sutra text</b> (the passage itself),
+   <b>Q&amp;A</b> (with §-numbered citations you can click), and <b>Full text</b> (the whole draft, paragraph by paragraph).
+   Guides and Q&amp;A are finished for ${done} of ${CH.length} sections; the rest are on the way.</p>
+   <div class="grid">`;
+  CH.forEach(c=>{
+    h+=`<button class="card" data-c="${c.i}">
+      <div class="n">${esc(c.label)}</div>
+      <h4>${esc(c.title)}</h4>
+      <div class="dt">${c.date} · ${c.guide?'<b>guide + Q&amp;A</b>':'text only'}</div>
+    </button>`;
+  });
+  return h+'</div>';
+}
+function renderSearch(k){
+  const kw=k.trim(); if(!kw)return '';
+  const low=kw.toLowerCase(), out=[];
+  CH.forEach(c=>{
+    c.blocks.forEach((b,i)=>{
+      const p=(b.en||'').toLowerCase().indexOf(low);
+      if(p>=0&&out.length<200)out.push({c,i,txt:b.en,p,where:'Full text'});
+    });
+    (c.qa||[]).forEach(q=>{
+      const t=q.q+' — '+q.a, p=t.toLowerCase().indexOf(low);
+      if(p>=0&&out.length<200)out.push({c,i:null,txt:t,p,where:'Q&A'});
+    });
+    if(c.guide){const p=c.guide.toLowerCase().indexOf(low);
+      if(p>=0)out.push({c,i:null,txt:c.guide,p,where:'Guide'});}
+  });
+  let h=`<div class="chead"><div class="num">Search</div><h2>“${esc(kw)}”</h2>
+    <div class="srcline">${out.length} match${out.length===1?'':'es'}${out.length>=200?' (showing the first 200)':''}</div></div>`;
+  if(!out.length)h+='<p class="hint">Nothing found. Try a shorter phrase — “giving”, “Subhuti”, “dwell”.</p>';
+  out.forEach(r=>{
+    const s=Math.max(0,r.p-70),e=Math.min(r.txt.length,r.p+kw.length+110);
+    const frag=esc(r.txt.slice(s,r.p))+'<mark>'+esc(r.txt.substr(r.p,kw.length))+'</mark>'+esc(r.txt.slice(r.p+kw.length,e));
+    h+=`<button class="res" data-c="${r.c.i}" data-b="${r.i===null?'':r.i}" data-w="${r.where}">
+      <div class="h">${esc(r.c.label)} · ${esc(r.c.title)} · ${r.where}${r.i!==null?' §'+r.i:''}</div>
+      <div class="t">…${frag}…</div></button>`;
+  });
+  return h;
+}
+
+function render(){
+  buildTabs();markNav();
+  const v=$('#view');
+  if(state.q){v.innerHTML=renderSearch(state.q);
+    v.querySelectorAll('.res').forEach(b=>b.onclick=()=>{
+      const w=b.dataset.w; state.q='';$('#q').value='';
+      state.tab = w==='Q&A'?'qa':w==='Guide'?'guide':'full';
+      go(+b.dataset.c, b.dataset.b===''?null:+b.dataset.b);});
+    return;}
+  if(state.ci<0){v.innerHTML=renderOverview();
+    v.querySelectorAll('.card').forEach(b=>b.onclick=()=>go(+b.dataset.c));return;}
+  const c=CH[state.ci];
+  v.innerHTML=head(c)+(state.tab==='guide'?renderGuide(c):state.tab==='sutra'?renderSutra(c):
+    state.tab==='qa'?renderQA(c):renderFull(c));
+  v.querySelectorAll('[data-goto]').forEach(b=>b.onclick=()=>jump(+b.dataset.goto));
+}
+function jump(n){
+  state.tab='full';render();
+  requestAnimationFrame(()=>{const el=document.getElementById('b'+n);
+    if(el){el.scrollIntoView({behavior:'smooth',block:'center'});
+      el.classList.remove('hit');void el.offsetWidth;el.classList.add('hit');}});
+}
+function go(ci,block){
+  state.ci=ci;window.scrollTo({top:0});render();
+  if(block!==null&&block!==undefined)jump(block);
+  location.hash=ci<0?'':'s'+ci;
+}
+$('#q').addEventListener('input',e=>{state.q=e.target.value;render();});
+
+buildNav();
+document.documentElement.style.setProperty('--fs',(localStorage.getItem('fs')||20)+'px');
+const m=(location.hash||'').match(/^#s(\d+)$/);
+go(m?+m[1]:-1);
+</script>
+</body>
+</html>
