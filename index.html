@@ -238,7 +238,7 @@ function blockHTML(b,i){
 function srcLine(c){
   const pct=Math.round(100*c.nEn/c.nBlk);
   return `<div class="srcline">Source file, dated ${c.date} — the most recent draft in this section's folder, named in Drive as
-   <code>${esc(c.file)}</code>. The English is reproduced as written there; ${pct}% of its paragraphs carry an English translation.
+   <code>${esc(c.file)}</code> (Drive filename, shown so the file can be found). The English is reproduced as written there; ${pct}% of its paragraphs carry an English translation.
    Every paragraph below is numbered <code>§n</code>, and the <code>§n</code> chips in the guide and Q&amp;A jump straight to it.</div>`;
 }
 function head(c){
@@ -289,7 +289,7 @@ function renderOverview(){
   let h=`<div class="chead"><div class="num">English edition · built only from the folder you gave</div>
    <h2>The Diamond Sutra</h2>
    <div class="tnote">Vajra Prajnaparamita — a reading dashboard with guides, Q&amp;A and traceable sources</div>
-   <div class="srcline">Single source of truth: the Google Drive folder <code>${esc(D.source.name)}</code> — ${D.source.dirs} folders, ${D.source.files} files.
+   <div class="srcline">Single source of truth: the Google Drive folder you provided — ${D.source.dirs} folders, ${D.source.files} files.
    Each section uses the <b>most recent dated draft</b> in its folder; the filename and date are shown at the top of every section.
    Only the English of those files is published here. Every paragraph is numbered, so anything said in a guide or an answer can be checked against the source.</div></div>
    <p class="lead">Pick the preface or any of the thirty-two sections on the left. Each has four tabs:
