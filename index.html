@@ -6,162 +6,207 @@
 <title>The Diamond Sutra — Reading Dashboard</title>
 <style>
 :root{
-  --paper:#FBFAF7; --paper2:#F5F3ED; --ink:#1E1C1A; --ink2:#453F3A; --ink3:#7B746B;
-  --line:#E3DED4; --line2:#EFEBE3; --sutra:#8A3B2E; --sutraBg:#FBF4F1;
-  --accent:#3B5661; --accentBg:#F1F5F6; --mark:#F7E7BC;
-  --fs:20px;
+  --paper:#FBFAF7; --paper2:#F4F2EB; --ink:#1B1917; --ink2:#443E39; --ink3:#756E66;
+  --line:#E3DED4; --line2:#EEEAE1; --sutra:#8A3B2E; --sutraBg:#FBF4F1; --sutraLine:#F0E2DB;
+  --accent:#37545F; --accentBg:#EFF4F5; --accentLine:#DBE5E8; --mark:#F7E6B8;
+  --fs:20px; --lh:1.8; --measure:52rem;
+}
+:root[data-theme="sepia"]{
+  --paper:#F6EEDF; --paper2:#EFE4CF; --ink:#2A2114; --ink2:#4C3F2C; --ink3:#7C6B52;
+  --line:#DDCDB0; --line2:#E8DBC2; --sutraBg:#F8EDDF; --sutraLine:#E4CFB6; --accentBg:#EDEEE4;
+}
+:root[data-theme="night"]{
+  --paper:#15161A; --paper2:#1D1F24; --ink:#EAE6DF; --ink2:#C4BEB4; --ink3:#8F887E;
+  --line:#2E3138; --line2:#24272C; --sutra:#E0A08C; --sutraBg:#20191A; --sutraLine:#3A2C2A;
+  --accent:#9FC4CE; --accentBg:#1A2226; --accentLine:#2C3A40; --mark:#4A3E19;
 }
 *{box-sizing:border-box;-webkit-text-size-adjust:100%}
 html,body{margin:0;padding:0}
-body{
-  background:var(--paper); color:var(--ink);
+body{background:var(--paper);color:var(--ink);
   font-family:Georgia,"Iowan Old Style","Palatino Linotype",Palatino,"Times New Roman",serif;
-  font-size:var(--fs); line-height:1.78;
-}
-body::before{content:"";position:fixed;inset:0;z-index:-1;pointer-events:none;
+  font-size:var(--fs);line-height:var(--lh)}
+:root[data-font="sans"] body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif}
+body::before{content:"";position:fixed;inset:0;z-index:-1;pointer-events:none;opacity:.9;
   background:
    radial-gradient(60% 45% at 12% 8%, rgba(60,80,90,.055), transparent 70%),
    radial-gradient(48% 40% at 92% 22%, rgba(120,90,70,.05), transparent 72%),
-   radial-gradient(70% 50% at 70% 96%, rgba(60,80,90,.045), transparent 70%),
-   radial-gradient(40% 30% at 30% 62%, rgba(90,90,90,.03), transparent 70%)}
+   radial-gradient(70% 50% at 70% 96%, rgba(60,80,90,.045), transparent 70%)}
+:root[data-theme="night"] body::before{opacity:.5}
 button{font-family:inherit;font-size:inherit;color:inherit;background:none;border:0;cursor:pointer}
+:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
 
 .wrap{display:flex;min-height:100vh}
-aside{width:310px;flex:0 0 310px;border-right:1px solid var(--line);background:rgba(255,255,255,.55);
-  position:sticky;top:0;height:100vh;overflow:auto;backdrop-filter:blur(6px)}
-main{flex:1;min-width:0;padding:0 0 8rem}
-.inner{max-width:52rem;margin:0 auto;padding:0 2.2rem}
+aside{width:312px;flex:0 0 312px;border-right:1px solid var(--line);background:var(--paper);
+  position:sticky;top:0;height:100vh;overflow:auto}
+main{flex:1;min-width:0;padding:0 0 6rem}
+.inner{max-width:var(--measure);margin:0 auto;padding:0 2.2rem}
+.sans{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif}
 
-.brand{padding:1.7rem 1.3rem 1rem;border-bottom:1px solid var(--line2)}
-.brand h1{margin:0;font-size:1.42rem;line-height:1.35;font-weight:600;letter-spacing:.01em}
-.brand .sub{font-size:.76rem;color:var(--ink3);letter-spacing:.14em;margin-top:.45rem;
-  text-transform:uppercase;line-height:1.7;font-family:system-ui,sans-serif}
-.searchbox{padding:.85rem 1.1rem;border-bottom:1px solid var(--line2)}
-.searchbox input{width:100%;padding:.6rem .8rem;font-size:.92rem;font-family:system-ui,sans-serif;
-  border:1px solid var(--line);border-radius:.5rem;background:#fff;color:var(--ink)}
-.searchbox input:focus{outline:2px solid var(--accentBg);border-color:var(--accent)}
-nav{padding:.5rem 0 3rem}
-nav .item{display:flex;gap:.7rem;width:100%;text-align:left;padding:.55rem 1.1rem .55rem 1.2rem;
-  font-size:.98rem;line-height:1.5;border-left:3px solid transparent;color:var(--ink2);align-items:baseline}
+.brand{padding:1.6rem 1.3rem .9rem;border-bottom:1px solid var(--line2)}
+.brand h1{margin:0;font-size:1.38rem;line-height:1.3;font-weight:600}
+.brand .sub{font-size:.72rem;color:var(--ink3);letter-spacing:.14em;margin-top:.45rem;
+  text-transform:uppercase;line-height:1.7;font-family:-apple-system,BlinkMacSystemFont,sans-serif}
+.searchbox{padding:.8rem 1.05rem;border-bottom:1px solid var(--line2)}
+.searchbox input{width:100%;padding:.62rem .8rem;font-size:.92rem;
+  font-family:-apple-system,BlinkMacSystemFont,sans-serif;
+  border:1px solid var(--line);border-radius:.5rem;background:var(--paper);color:var(--ink)}
+.searchbox .hintk{font-size:.68rem;color:var(--ink3);margin-top:.35rem;letter-spacing:.06em}
+nav{padding:.4rem 0 3rem}
+nav .grp{padding:1rem 1.2rem .3rem;font-size:.66rem;letter-spacing:.16em;color:var(--ink3);
+  text-transform:uppercase;font-family:-apple-system,BlinkMacSystemFont,sans-serif;line-height:1.6}
+nav .grp b{display:block;color:var(--ink2);font-size:.78rem;letter-spacing:.04em;text-transform:none;
+  font-weight:600;margin-top:.1rem}
+nav .item{display:flex;gap:.65rem;width:100%;text-align:left;padding:.5rem 1.05rem .5rem 1.2rem;
+  font-size:.95rem;line-height:1.5;border-left:3px solid transparent;color:var(--ink2);align-items:baseline}
 nav .item:hover{background:var(--paper2)}
-nav .item.on{background:#fff;border-left-color:var(--sutra);color:var(--ink);font-weight:600}
-nav .item .n{flex:0 0 2.1em;color:var(--ink3);font-size:.8em;font-family:system-ui,sans-serif;letter-spacing:.06em}
+nav .item.on{background:var(--paper2);border-left-color:var(--sutra);color:var(--ink);font-weight:600}
+nav .item .n{flex:0 0 2em;color:var(--ink3);font-size:.76em;letter-spacing:.04em;
+  font-family:-apple-system,BlinkMacSystemFont,sans-serif}
 nav .item.on .n{color:var(--sutra)}
-nav .grp{padding:1.1rem 1.2rem .4rem;font-size:.7rem;letter-spacing:.2em;color:var(--ink3);
-  text-transform:uppercase;font-family:system-ui,sans-serif}
+nav .item .dot{margin-left:auto;flex:0 0 auto;width:.42rem;height:.42rem;border-radius:50%;
+  background:var(--accent);opacity:.0;align-self:center}
+nav .item.read .dot{opacity:.45}
 
-.topbar{position:sticky;top:0;z-index:20;background:rgba(251,250,247,.94);backdrop-filter:blur(8px);
-  border-bottom:1px solid var(--line)}
-.topbar .inner{display:flex;align-items:center;gap:.8rem;padding-top:.65rem;padding-bottom:.65rem;flex-wrap:wrap}
-.tabs{display:flex;gap:.25rem;flex:1;flex-wrap:wrap}
-.tab{padding:.4rem 1rem;border-radius:2rem;font-size:.95rem;color:var(--ink3);border:1px solid transparent;
-  font-family:system-ui,sans-serif;letter-spacing:.02em}
+.topbar{position:sticky;top:0;z-index:20;background:var(--paper);border-bottom:1px solid var(--line)}
+.topbar .inner{display:flex;align-items:center;gap:.7rem;padding-top:.6rem;padding-bottom:.6rem;flex-wrap:wrap}
+.tabs{display:flex;gap:.2rem;flex:1;flex-wrap:wrap}
+.tab{padding:.38rem .95rem;border-radius:2rem;font-size:.92rem;color:var(--ink3);
+  border:1px solid transparent;font-family:-apple-system,BlinkMacSystemFont,sans-serif}
 .tab:hover{background:var(--paper2)}
-.tab.on{background:#fff;border-color:var(--line);color:var(--sutra);font-weight:600}
-.tools{display:flex;gap:.35rem;align-items:center}
-.tool{padding:.33rem .68rem;border:1px solid var(--line);border-radius:.45rem;font-size:.8rem;
-  color:var(--ink3);background:#fff;font-family:system-ui,sans-serif}
+.tab.on{background:var(--paper2);border-color:var(--line);color:var(--sutra);font-weight:600}
+.tab .badge{font-size:.72em;opacity:.75;margin-left:.3em}
+.tools{display:flex;gap:.3rem;align-items:center}
+.tool{padding:.3rem .62rem;border:1px solid var(--line);border-radius:.45rem;font-size:.78rem;
+  color:var(--ink3);background:var(--paper);font-family:-apple-system,BlinkMacSystemFont,sans-serif}
 .tool:hover{background:var(--paper2)}
+.tool.on{border-color:var(--accent);color:var(--accent)}
 
-.chead{padding:2.5rem 0 1.3rem;border-bottom:1px solid var(--line2)}
-.chead .num{font-size:.74rem;letter-spacing:.22em;color:var(--ink3);text-transform:uppercase;
-  font-family:system-ui,sans-serif}
-.chead h2{margin:.55rem 0 .3rem;font-size:2.2rem;line-height:1.25;font-weight:600;letter-spacing:-.01em}
-.chead .tnote{color:var(--ink3);font-size:.9rem;font-style:italic}
-.verse{margin:1.5rem 0 .3rem;border-left:3px solid #E9D9D2;padding:.2rem 0 .2rem 1.1rem}
-.verse div{color:var(--sutra);font-size:1.02rem;line-height:1.85;font-style:italic}
-.srcline{font-size:.82rem;color:var(--ink3);line-height:1.75;margin-top:1rem;font-family:system-ui,sans-serif}
-.srcline code{background:var(--paper2);padding:.1rem .4rem;border-radius:.3rem;
+.chead{padding:2.3rem 0 1.2rem;border-bottom:1px solid var(--line2)}
+.chead .num{font-size:.72rem;letter-spacing:.2em;color:var(--ink3);text-transform:uppercase;
+  font-family:-apple-system,BlinkMacSystemFont,sans-serif}
+.chead h2{margin:.5rem 0 .3rem;font-size:2.1rem;line-height:1.24;font-weight:600}
+.chead .tnote{color:var(--ink3);font-size:.88rem;font-style:italic}
+.oneline{margin:1.1rem 0 0;font-size:1.12rem;line-height:1.65;color:var(--ink2);
+  border-left:3px solid var(--accentLine);padding-left:1rem}
+.verse{margin:1.3rem 0 .3rem;border-left:3px solid var(--sutraLine);padding:.15rem 0 .15rem 1rem}
+.verse div{color:var(--sutra);font-size:1rem;line-height:1.8;font-style:italic}
+.srcline{font-size:.78rem;color:var(--ink3);line-height:1.7;margin-top:.9rem;
+  font-family:-apple-system,BlinkMacSystemFont,sans-serif}
+.srcline code{background:var(--paper2);padding:.08rem .38rem;border-radius:.3rem;
   font-family:ui-monospace,Menlo,monospace;font-size:.9em;color:var(--ink2)}
 
-section{padding-top:1.2rem}
-h3.sec{font-size:.8rem;letter-spacing:.2em;color:var(--ink3);font-weight:600;margin:2.3rem 0 1rem;
-  padding-bottom:.5rem;border-bottom:1px solid var(--line2);text-transform:uppercase;
-  font-family:system-ui,sans-serif}
-.guide{font-size:1.04em;line-height:1.95}
-.guide p{margin:0 0 1.05em}
-.keys{display:flex;flex-wrap:wrap;gap:.5rem;margin:1.1rem 0 0}
-.key{background:var(--accentBg);color:var(--accent);border:1px solid #DEE7E9;border-radius:2rem;
-  padding:.3rem .9rem;font-size:.85rem;font-family:system-ui,sans-serif}
+section{padding-top:1.1rem}
+h3.sec{font-size:.76rem;letter-spacing:.18em;color:var(--ink3);font-weight:600;margin:2.1rem 0 .9rem;
+  padding-bottom:.45rem;border-bottom:1px solid var(--line2);text-transform:uppercase;
+  font-family:-apple-system,BlinkMacSystemFont,sans-serif;display:flex;gap:.6rem;align-items:baseline}
+h3.sec .r{margin-left:auto;text-transform:none;letter-spacing:.02em;font-weight:400}
+.guide{font-size:1.03em;line-height:1.92}
+.guide p{margin:0 0 1em}
+.keys{display:flex;flex-wrap:wrap;gap:.45rem;margin:1rem 0 0}
+.key{background:var(--accentBg);color:var(--accent);border:1px solid var(--accentLine);
+  border-radius:2rem;padding:.28rem .85rem;font-size:.84rem;
+  font-family:-apple-system,BlinkMacSystemFont,sans-serif}
+a.key:hover{background:var(--accent);color:var(--paper)}
 
-.blk{padding:.5rem 0;position:relative;scroll-margin-top:6rem;border-radius:.35rem;line-height:1.85}
-.blk .anchor{color:var(--ink3);opacity:.42;font-size:.7rem;font-family:ui-monospace,Menlo,monospace;
-  margin-right:.55rem;letter-spacing:0}
-.blk:hover .anchor{opacity:.9}
-.blk.hit{background:var(--mark);box-shadow:0 0 0 .55rem var(--mark);animation:fade 3.6s forwards}
-@keyframes fade{0%,55%{background:var(--mark);box-shadow:0 0 0 .55rem var(--mark)}
+.blk{padding:.45rem 0;position:relative;scroll-margin-top:6.5rem;border-radius:.35rem;line-height:var(--lh)}
+.blk .anchor{color:var(--ink3);opacity:.4;font-size:.68rem;font-family:ui-monospace,Menlo,monospace;
+  margin-right:.5rem;letter-spacing:0;cursor:pointer;text-decoration:none}
+.blk:hover .anchor{opacity:.95}
+.blk.hit{background:var(--mark);box-shadow:0 0 0 .5rem var(--mark);animation:fade 4s forwards}
+@keyframes fade{0%,60%{background:var(--mark);box-shadow:0 0 0 .5rem var(--mark)}
  100%{background:transparent;box-shadow:none}}
-.blk.heading{margin-top:1.8rem}
-.blk.heading .tx{font-size:1.14rem;font-weight:600;line-height:1.5;border-left:4px solid var(--sutra);
-  padding-left:.8rem;display:block}
-.blk.sutra{background:var(--sutraBg);border:1px solid #F1E4DE;border-radius:.65rem;
-  padding:1rem 1.25rem;margin:1rem 0}
-.blk.sutra .tx{color:var(--sutra);font-size:1.03em;line-height:1.95}
-.blk.verse .tx{color:var(--sutra);font-style:italic}
-.blk.gap .tx{color:var(--ink3);font-style:italic;font-size:.85em}
+.blk.heading{margin-top:1.7rem}
+.blk.heading .tx{font-size:1.12rem;font-weight:600;line-height:1.5;border-left:4px solid var(--sutra);
+  padding-left:.75rem;display:block}
+.blk.sutra{background:var(--sutraBg);border:1px solid var(--sutraLine);border-radius:.6rem;
+  padding:.95rem 1.2rem;margin:.95rem 0}
+.blk.sutra .tx{color:var(--sutra);font-size:1.02em;line-height:1.9}
+.blk.gap{opacity:.75}
+.blk.gap .tx{color:var(--ink3);font-style:italic;font-size:.84em}
 .blk .tx{white-space:pre-wrap}
+.mark-btn{position:absolute;left:-2.4rem;top:.5rem;opacity:0;font-size:.8rem;color:var(--ink3)}
+.blk:hover .mark-btn{opacity:.8}
+.blk.marked{box-shadow:inset .22rem 0 0 var(--accent)}
 
-.qa{border:1px solid var(--line);background:rgba(255,255,255,.62);border-radius:.75rem;
-  margin:0 0 .9rem;overflow:hidden}
-.qa summary{list-style:none;cursor:pointer;padding:1rem 1.25rem;font-size:1.06rem;font-weight:600;
-  line-height:1.55;display:flex;gap:.75rem;align-items:baseline}
+.qa{border:1px solid var(--line);background:var(--paper);border-radius:.7rem;margin:0 0 .85rem;overflow:hidden}
+.qa summary{list-style:none;cursor:pointer;padding:.95rem 1.2rem;font-size:1.04rem;font-weight:600;
+  line-height:1.55;display:flex;gap:.7rem;align-items:baseline}
 .qa summary::-webkit-details-marker{display:none}
 .qa summary:hover{background:var(--paper2)}
-.qa summary .q{color:var(--sutra);font-size:.72em;flex:0 0 auto;font-family:system-ui,sans-serif;
-  letter-spacing:.1em;text-transform:uppercase}
+.qa summary .q{color:var(--sutra);font-size:.7em;flex:0 0 auto;letter-spacing:.09em;text-transform:uppercase;
+  font-family:-apple-system,BlinkMacSystemFont,sans-serif}
+.qa summary .tick{margin-left:auto;flex:0 0 auto;color:var(--accent);opacity:0;font-size:.85em}
+.qa.done summary .tick{opacity:.85}
 .qa[open] summary{border-bottom:1px solid var(--line2);background:var(--paper2)}
-.qa .body{padding:1rem 1.25rem 1.2rem}
-.qa .body p{margin:0 0 .8em;line-height:1.9}
-.refs{margin-top:.85rem;display:flex;flex-wrap:wrap;gap:.4rem;align-items:center}
-.refs .lbl{font-size:.72rem;color:var(--ink3);letter-spacing:.14em;text-transform:uppercase;
-  font-family:system-ui,sans-serif}
-.ref{border:1px solid #DEE7E9;background:var(--accentBg);color:var(--accent);border-radius:.4rem;
-  padding:.16rem .58rem;font-size:.78rem;font-family:ui-monospace,Menlo,monospace}
-.ref:hover{background:var(--accent);color:#fff}
-.note{background:#FFFCF2;border:1px solid #F0E6C8;border-radius:.65rem;padding:.95rem 1.15rem;
-  font-size:.92em;line-height:1.8;color:var(--ink2);margin:1.1rem 0}
-.note b{color:#87671C}
+.qa .body{padding:.95rem 1.2rem 1.1rem}
+.qa .body p{margin:0 0 .75em;line-height:1.88}
+.refs{margin-top:.8rem;display:flex;flex-wrap:wrap;gap:.35rem;align-items:center}
+.refs .lbl{font-size:.68rem;color:var(--ink3);letter-spacing:.12em;text-transform:uppercase;
+  font-family:-apple-system,BlinkMacSystemFont,sans-serif}
+.ref{border:1px solid var(--accentLine);background:var(--accentBg);color:var(--accent);
+  border-radius:.4rem;padding:.14rem .55rem;font-size:.76rem;font-family:ui-monospace,Menlo,monospace}
+.ref:hover{background:var(--accent);color:var(--paper)}
+.note{background:var(--paper2);border:1px solid var(--line);border-radius:.6rem;padding:.9rem 1.1rem;
+  font-size:.9em;line-height:1.78;color:var(--ink2);margin:1rem 0}
 .pending{color:var(--ink3);background:var(--paper2);border:1px dashed var(--line);
-  border-radius:.65rem;padding:1.3rem;text-align:center;font-size:.95em;line-height:1.8}
+  border-radius:.6rem;padding:1.2rem;text-align:center;font-size:.94em;line-height:1.78}
 
-.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(15rem,1fr));gap:1rem;margin-top:1.3rem}
-.card{border:1px solid var(--line);background:rgba(255,255,255,.62);border-radius:.75rem;
-  padding:1rem 1.15rem;text-align:left;transition:.15s;display:block;width:100%}
-.card:hover{border-color:var(--sutra);background:#fff;transform:translateY(-2px)}
-.card .n{font-size:.68rem;letter-spacing:.2em;color:var(--ink3);text-transform:uppercase;
-  font-family:system-ui,sans-serif}
-.card h4{margin:.4rem 0 .55rem;font-size:1.08rem;font-weight:600;line-height:1.4}
-.card .dt{font-size:.7rem;color:var(--ink3);letter-spacing:.04em;font-family:system-ui,sans-serif}
-.card .dt b{color:var(--sutra);font-weight:600}
-.lead{font-size:1.02em;line-height:1.95;color:var(--ink2);max-width:42rem}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(14.5rem,1fr));gap:.9rem;margin:1rem 0 2rem}
+.card{border:1px solid var(--line);background:var(--paper);border-radius:.7rem;padding:.95rem 1.1rem;
+  text-align:left;transition:.14s;display:block;width:100%}
+.card:hover{border-color:var(--sutra);transform:translateY(-2px)}
+.card .n{font-size:.66rem;letter-spacing:.18em;color:var(--ink3);text-transform:uppercase;
+  font-family:-apple-system,BlinkMacSystemFont,sans-serif}
+.card h4{margin:.35rem 0 .45rem;font-size:1.05rem;font-weight:600;line-height:1.4}
+.card .dt{font-size:.7rem;color:var(--ink3);font-family:-apple-system,BlinkMacSystemFont,sans-serif}
+.card.read{border-left:3px solid var(--accent)}
+.lead{font-size:1.02em;line-height:1.9;color:var(--ink2);max-width:42rem}
+.bigbtn{display:inline-block;border:1px solid var(--accent);color:var(--accent);background:var(--accentBg);
+  border-radius:.5rem;padding:.6rem 1.15rem;font-size:.95rem;margin:.3rem .4rem .3rem 0;
+  font-family:-apple-system,BlinkMacSystemFont,sans-serif}
+.bigbtn:hover{background:var(--accent);color:var(--paper)}
+.stage{border-top:1px solid var(--line2);margin-top:2rem;padding-top:1.2rem}
+.stage .h{font-size:.72rem;letter-spacing:.16em;text-transform:uppercase;color:var(--ink3);
+  font-family:-apple-system,BlinkMacSystemFont,sans-serif}
+.stage h4{margin:.3rem 0 .2rem;font-size:1.2rem;font-weight:600}
+.stage p{margin:.2rem 0 0;font-size:.92em;color:var(--ink3);line-height:1.7}
 
-.res{border-bottom:1px solid var(--line2);padding:.95rem 0;display:block;width:100%;text-align:left}
+.res{border-bottom:1px solid var(--line2);padding:.9rem 0;display:block;width:100%;text-align:left}
 .res:hover{background:var(--paper2)}
-.res .h{font-size:.76rem;color:var(--sutra);letter-spacing:.08em;text-transform:uppercase;
-  font-family:system-ui,sans-serif}
-.res .t{margin-top:.3rem;line-height:1.8;color:var(--ink2);font-size:.95em}
-.res mark{background:var(--mark);color:var(--ink);padding:0 .1em}
-.hint{color:var(--ink3);font-size:.94em}
-footer{margin-top:4rem;border-top:1px solid var(--line);padding:1.6rem 0 0;
-  font-family:system-ui,sans-serif;font-size:.8rem;line-height:1.85;color:var(--ink3)}
+.res .h{font-size:.72rem;color:var(--sutra);letter-spacing:.07em;text-transform:uppercase;
+  font-family:-apple-system,BlinkMacSystemFont,sans-serif}
+.res .t{margin-top:.25rem;line-height:1.75;color:var(--ink2);font-size:.94em}
+.res mark,mark{background:var(--mark);color:var(--ink);padding:0 .1em}
+.filters{display:flex;gap:.35rem;flex-wrap:wrap;margin:.9rem 0 .3rem}
+.hint{color:var(--ink3);font-size:.92em}
+.prevnext{display:flex;gap:.6rem;margin-top:2.4rem;border-top:1px solid var(--line2);padding-top:1.2rem}
+.prevnext button{flex:1;border:1px solid var(--line);border-radius:.6rem;padding:.8rem 1rem;
+  text-align:left;font-size:.92rem;color:var(--ink2);line-height:1.5}
+.prevnext button:hover{border-color:var(--sutra)}
+.prevnext .k{display:block;font-size:.66rem;letter-spacing:.14em;color:var(--ink3);
+  text-transform:uppercase;font-family:-apple-system,BlinkMacSystemFont,sans-serif;margin-bottom:.2rem}
+.prevnext button:last-child{text-align:right}
+footer{margin-top:3.4rem;border-top:1px solid var(--line);padding:1.5rem 0 0;
+  font-family:-apple-system,BlinkMacSystemFont,sans-serif;font-size:.78rem;line-height:1.8;color:var(--ink3)}
 footer b{color:var(--ink2);font-weight:600}
-footer .c{font-size:.86rem;color:var(--ink2);margin-bottom:.55rem}
-footer ul{margin:.5rem 0 0;padding-left:1.1rem}
-footer li{margin:.15rem 0}
+footer .c{font-size:.85rem;color:var(--ink2);margin-bottom:.5rem}
+footer ul{margin:.4rem 0 0;padding-left:1.05rem}
 .menu-btn{display:none}
-@media(max-width:900px){
-  aside{position:fixed;left:0;top:0;z-index:60;transform:translateX(-100%);transition:.22s;
-    box-shadow:0 0 3rem rgba(0,0,0,.12)}
+@media(max-width:960px){
+  aside{position:fixed;left:0;top:0;z-index:60;transform:translateX(-100%);transition:.2s;
+    box-shadow:0 0 3rem rgba(0,0,0,.18)}
   aside.open{transform:none}
   .menu-btn{display:block}
-  .inner{padding:0 1.2rem}
-  .topbar .inner{gap:.55rem}
-  .tabs{order:3;flex:0 0 100%;flex-wrap:nowrap;overflow-x:auto;padding-bottom:.1rem}
+  .inner{padding:0 1.15rem}
+  .topbar .inner{gap:.5rem}
+  .tabs{order:3;flex:0 0 100%;flex-wrap:nowrap;overflow-x:auto}
   .tab{flex:0 0 auto}
   .tools{margin-left:auto}
-  .chead h2{font-size:1.75rem}
+  .chead h2{font-size:1.7rem}
+  .mark-btn{position:static;opacity:.6;margin-right:.4rem}
   :root{--fs:19px}
 }
+@media print{aside,.topbar,.prevnext,.tools{display:none}main{padding:0}.inner{max-width:none}}
 </style>
 </head>
 <body>
@@ -171,17 +216,22 @@ footer li{margin:.15rem 0}
     <h1>The Diamond Sutra</h1>
     <div class="sub">Vajra Prajnaparamita · Reading Dashboard</div>
   </div>
-  <div class="searchbox"><input id="q" type="search" placeholder="Search the whole text, guides and Q&amp;A"></div>
+  <div class="searchbox">
+    <input id="q" type="search" placeholder="Search everything…" aria-label="Search">
+    <div class="hintk">Press <b>/</b> to search · <b>Esc</b> to clear</div>
+  </div>
   <nav id="nav"></nav>
 </aside>
 
 <main>
   <div class="topbar"><div class="inner">
-    <button class="menu-btn tool" onclick="document.getElementById('side').classList.toggle('open')">Contents</button>
+    <button class="menu-btn tool" id="menuBtn">Contents</button>
     <div class="tabs" id="tabs"></div>
     <div class="tools">
-      <button class="tool" onclick="fs(-1)">A−</button>
-      <button class="tool" onclick="fs(1)">A+</button>
+      <button class="tool" id="themeBtn" title="Paper / sepia / night">Paper</button>
+      <button class="tool" id="fontBtn" title="Serif / sans-serif">Serif</button>
+      <button class="tool" onclick="fs(-1)" aria-label="Smaller text">A−</button>
+      <button class="tool" onclick="fs(1)" aria-label="Larger text">A+</button>
     </div>
   </div></div>
   <div class="inner" id="view"></div>
@@ -192,14 +242,14 @@ footer li{margin:.15rem 0}
       <li><b>Translation:</b> Sutra Translation Institute, Bao Yan Chan Monastery</li>
       <li><b>Published and distributed by:</b> Bao Yan Chan Monastery, Bao Yan Mountain</li>
     </ul>
-    <div style="margin-top:.7rem">Sutra passages follow the renderings used in the source drafts,
-    which credit Buddha's Light Publishing (Fo Guang Shan) as a reference. This dashboard reproduces
-    the English text of those drafts and adds editorial guides and questions.</div>
+    <div style="margin-top:.65rem">Sutra passages follow the renderings used in the source drafts, which
+    credit Buddha's Light Publishing (Fo Guang Shan) as a reference. This dashboard reproduces the English
+    text of those drafts and adds editorial guides and questions.</div>
     <ul>
-      <li>Working drafts, not a final published edition: wording, section titles and untranslated
-          gaps reflect the state of each file on its stated date.</li>
-      <li>Freely readable for personal study and Dharma circulation. No commercial use, reprinting
-          or redistribution without written permission.</li>
+      <li>Working drafts, not a final published edition: wording, section titles and untranslated gaps
+          reflect the state of each file on its stated date.</li>
+      <li>Freely readable for personal study and Dharma circulation. No commercial use, reprinting or
+          redistribution without written permission.</li>
       <li>Guides and Q&amp;A are editorial summaries of the drafts, each citing the paragraph it rests on.</li>
     </ul>
   </footer></div>
@@ -209,168 +259,317 @@ footer li{margin:.15rem 0}
 <script src="data.js"></script>
 <script>
 const D=window.SUTRA_DATA, CH=D.chapters;
-let state={ci:-1,tab:'guide',q:''};
-const $=s=>document.querySelector(s);
-const esc=s=>(s||'').replace(/[&<>]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;'}[c]));
+const LS='ds.en.';
+const TABS=[['guide','Guide'],['sutra','Sutra text'],['qa','Q&A'],['full','Full text']];
+/* The four outlines are the traditional division of the sutra, as set out in the review
+   chapter of the Chinese edition of this same course book. */
+const STAGES=[
+  {k:'Outline One',t:'Showing how to master and abide, and giving rise to faith',a:1,b:8,
+   p:'Sections 1–8 set the two questions and build faith: the occasion, Subhuti’s request, the four minds, giving without dwelling, and the first sight of "every appearance is a deception".'},
+  {k:'Outline Two',t:'Extending mastery and abiding, and opening understanding',a:9,b:16,
+   p:'Sections 9–16 take the same questions deeper: the fruits that are not attained, the pure land that is not adorned, the merit that is not merit, and karma that can be purified.'},
+  {k:'Outline Three',t:'Ultimate mastery and abiding, and taking up practice',a:17,b:24,
+   p:'Sections 17–24 return to the opening questions at a higher altitude: ultimate no-self, the five eyes, the three unattainable minds, and leaving form and appearance behind.'},
+  {k:'Outline Four',t:'Decisive mastery and abiding, and completing realisation',a:25,b:32,
+   p:'Sections 25–32 close the argument: transforming without anyone transformed, the Dharma body that is not appearances, not falling into annihilation, and the six similes for all conditioned things.'}];
 
+let state={ci:-1,tab:'guide',q:'',filter:'all'};
+const $=s=>document.querySelector(s);
+const esc=s=>(s||'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const store={
+  get(k,d){try{const v=localStorage.getItem(LS+k);return v===null?d:JSON.parse(v)}catch(e){return d}},
+  set(k,v){try{localStorage.setItem(LS+k,JSON.stringify(v))}catch(e){}}
+};
+let readQ=store.get('readQ',{}), marks=store.get('marks',{}), seen=store.get('seen',{});
+const stageOf=n=>STAGES.find(s=>n>=s.a&&n<=s.b);
+const firstSentence=t=>{const m=(t||'').match(/^[\s\S]*?[.!?](\s|$)/);return m?m[0].trim():(t||'').slice(0,180)};
+const qaCount=c=>c.qa.length, qaDone=c=>c.qa.filter((_,k)=>readQ[c.i+'.'+k]).length;
+const gapCount=c=>c.blocks.filter(b=>b.gap).length;
+
+/* ---------- sidebar ---------- */
 function buildNav(){
   let h='<button class="item" data-c="-1"><span class="n">◈</span><span>Overview</span></button>'
-       +'<div class="grp">Thirty-two Sections</div>';
-  CH.forEach(c=>{
-    h+=`<button class="item" data-c="${c.i}"><span class="n">${c.num===0?'Pref':c.num}</span><span>${esc(c.title)}</span></button>`;
+   +'<button class="item" data-c="0"><span class="n">Pref</span><span>'+esc(CH[0].title)+'</span></button>';
+  STAGES.forEach(s=>{
+    h+=`<div class="grp">${s.k}<b>${esc(s.t)}</b></div>`;
+    CH.filter(c=>c.num>=s.a&&c.num<=s.b).forEach(c=>{
+      h+=`<button class="item${seen[c.i]?' read':''}" data-c="${c.i}"><span class="n">${c.num}</span>`
+       +`<span>${esc(c.title)}</span><span class="dot"></span></button>`;
+    });
   });
   $('#nav').innerHTML=h;
   $('#nav').onclick=e=>{const b=e.target.closest('.item');if(!b)return;
-    go(+b.dataset.c);document.getElementById('side').classList.remove('open');};
+    go(+b.dataset.c);$('#side').classList.remove('open')};
 }
-function markNav(){document.querySelectorAll('#nav .item').forEach(b=>b.classList.toggle('on',+b.dataset.c===state.ci));}
+function markNav(){document.querySelectorAll('#nav .item').forEach(b=>{
+  b.classList.toggle('on',+b.dataset.c===state.ci);
+  const c=CH[+b.dataset.c]; if(c) b.classList.toggle('read',!!seen[c.i]);})}
 
-const TABS=[['guide','Guide'],['sutra','Sutra text'],['qa','Q&A'],['full','Full text']];
+/* ---------- chrome ---------- */
 function buildTabs(){
-  if(state.ci<0){$('#tabs').innerHTML='';return;}
-  $('#tabs').innerHTML=TABS.map(([k,n])=>`<button class="tab ${state.tab===k?'on':''}" data-t="${k}">${n}</button>`).join('');
-  $('#tabs').onclick=e=>{const b=e.target.closest('.tab');if(!b)return;state.tab=b.dataset.t;render();};
+  if(state.ci<0){$('#tabs').innerHTML='';return}
+  const c=CH[state.ci];
+  $('#tabs').innerHTML=TABS.map(([k,n])=>{
+    let badge='';
+    if(k==='qa'&&qaCount(c)) badge=`<span class="badge">${qaDone(c)}/${qaCount(c)}</span>`;
+    if(k==='full') badge=`<span class="badge">${c.nEn}</span>`;
+    return `<button class="tab ${state.tab===k?'on':''}" data-t="${k}">${n}${badge}</button>`}).join('');
+  $('#tabs').onclick=e=>{const b=e.target.closest('.tab');if(!b)return;state.tab=b.dataset.t;push();render()};
 }
-function fs(d){let v=parseFloat(localStorage.getItem('fs')||20)+d;v=Math.max(16,Math.min(28,v));
-  localStorage.setItem('fs',v);document.documentElement.style.setProperty('--fs',v+'px');}
+const THEMES=['paper','sepia','night'], TLABEL={paper:'Paper',sepia:'Sepia',night:'Night'};
+function setTheme(t){document.documentElement.dataset.theme=t;store.set('theme',t);$('#themeBtn').textContent=TLABEL[t]}
+$('#themeBtn').onclick=()=>{const i=THEMES.indexOf(document.documentElement.dataset.theme||'paper');
+  setTheme(THEMES[(i+1)%3])};
+function setFont(f){document.documentElement.dataset.font=f;store.set('font',f);
+  $('#fontBtn').textContent=f==='sans'?'Sans':'Serif'}
+$('#fontBtn').onclick=()=>setFont((document.documentElement.dataset.font||'serif')==='serif'?'sans':'serif');
+function fs(d){let v=(store.get('fs',20))+d;v=Math.max(16,Math.min(30,v));store.set('fs',v);
+  document.documentElement.style.setProperty('--fs',v+'px')}
+$('#menuBtn').onclick=()=>$('#side').classList.toggle('open');
 
+/* ---------- render pieces ---------- */
 function blockHTML(b,i){
-  if(b.gap) return `<div class="blk gap" id="b${i}"><span class="anchor">§${i}</span><span class="tx">[this paragraph is present in the source file but has no English translation yet]</span></div>`;
-  const cls='blk '+(b.t==='heading'?'heading':b.t==='sutra'?'sutra':b.t==='verse'?'verse':'para');
-  return `<div class="${cls}" id="b${i}"><span class="anchor">§${i}</span><span class="tx">${esc(b.en)}</span></div>`;
+  const id='b'+i, m=marks[state.ci+'.'+i]?' marked':'';
+  if(b.gap) return `<div class="blk gap${m}" id="${id}"><a class="anchor" href="#s${state.ci}/full/${i}">§${i}</a>`
+    +`<span class="tx">[present in the source file, not yet translated]</span></div>`;
+  const cls=b.t==='heading'?'heading':b.t==='sutra'?'sutra':b.t==='verse'?'verse':'para';
+  return `<div class="blk ${cls}${m}" id="${id}">`
+    +`<button class="mark-btn" data-mark="${i}" title="Bookmark this paragraph">◆</button>`
+    +`<a class="anchor" href="#s${state.ci}/full/${i}">§${i}</a><span class="tx">${esc(b.en)}</span></div>`;
 }
 function srcLine(c){
-  const pct=Math.round(100*c.nEn/c.nBlk);
-  return `<div class="srcline">Source file, dated ${c.date} — the most recent draft in this section's folder, named in Drive as
-   <code>${esc(c.file)}</code> (Drive filename, shown so the file can be found). The English is reproduced as written there; ${pct}% of its paragraphs carry an English translation.
-   Every paragraph below is numbered <code>§n</code>, and the <code>§n</code> chips in the guide and Q&amp;A jump straight to it.</div>`;
+  const pct=Math.round(100*c.nEn/c.nBlk), g=gapCount(c);
+  return `<div class="srcline">Source file dated ${c.date} — the most recent draft in this section's folder,
+   named in Drive as <code>${esc(c.file)}</code>. English reproduced as written there; ${pct}% of paragraphs
+   carry a translation${g?`, ${g} not yet`:''}. Paragraphs are numbered <code>§n</code>; the chips in the
+   guide and Q&amp;A jump to them, and every <code>§n</code> is a shareable link.</div>`;
 }
 function head(c){
+  const st=stageOf(c.num);
   return `<div class="chead">
-    <div class="num">${esc(c.label)} · ${c.date}</div>
+    <div class="num">${esc(c.label)}${st?' · '+esc(st.k):''} · ${c.date}</div>
     <h2>${esc(c.title)}</h2>
     ${c.tnote?`<div class="tnote">${esc(c.tnote)}</div>`:''}
-    ${c.verse.length?`<div class="verse">${c.verse.map(v=>`<div>${esc(v)}</div>`).join('')}</div>
-      <div class="srcline" style="margin-top:.35rem">Summarising verse, as translated in the source file.</div>`:''}
-    ${srcLine(c)}
-  </div>`;
+    ${c.guide?`<div class="oneline">${esc(firstSentence(c.guide))}</div>`:''}
+    ${c.verse.length?`<div class="verse">${c.verse.map(v=>`<div>${esc(v)}</div>`).join('')}</div>`:''}
+    ${srcLine(c)}</div>`;
 }
 function renderGuide(c){
   let h='<section>';
-  if(!c.guide){h+=`<div class="pending">The guide and Q&amp;A for this section are still being written from the latest English draft.<br>
-    The <b>Sutra text</b> and <b>Full text</b> tabs are already complete — you can read those now.</div>`;}
+  if(!c.guide){h+='<div class="pending">No guide for this unit.</div>'}
   else{
     h+='<h3 class="sec">Guide</h3><div class="guide"><p>'+esc(c.guide)+'</p></div>';
     if(c.note)h+=`<div class="note"><b>About this draft: </b>${esc(c.note)}</div>`;
-    if(c.keys.length)h+='<h3 class="sec">Key points</h3><div class="keys">'
-      +c.keys.map(k=>`<span class="key">${esc(k)}</span>`).join('')+'</div>';
+    if(c.keys.length)h+='<h3 class="sec">Key points<span class="r">tap to find every section that turns on the same idea</span></h3>'
+      +'<div class="keys">'+c.keys.map(k=>`<a class="key" href="#" data-key="${esc(k)}">${esc(k)}</a>`).join('')+'</div>';
+    if(qaCount(c))h+=`<h3 class="sec">Next</h3><button class="bigbtn" data-tab="qa">Work through the ${qaCount(c)} questions →</button>`
+      +`<button class="bigbtn" data-tab="full">Read the whole draft →</button>`;
   }
   return h+'</section>';
 }
 function renderSutra(c){
-  let h='<section><h3 class="sec">Sutra text of this section</h3>';
-  if(!c.sutra.length)h+='<div class="pending">This piece is the preface; it has no sutra passage of its own.</div>';
-  c.sutra.forEach(s=>{h+=`<div class="blk sutra"><span class="tx">${esc(s)}</span></div>`;});
+  let h='<section><h3 class="sec">Sutra text of this section<span class="r"><a class="key" href="#sutra-only">read all 32 passages in one scroll</a></span></h3>';
+  if(!c.sutra.length)h+='<div class="pending">This unit is the preface; it has no sutra passage of its own.</div>';
+  c.sutra.forEach(s=>{h+=`<div class="blk sutra"><span class="tx">${esc(s)}</span></div>`});
   return h+'</section>';
 }
 function renderQA(c){
-  if(!c.qa.length)return '<section><div class="pending">The Q&amp;A for this section is still being written.</div></section>';
-  let h='<section><h3 class="sec">Questions &amp; answers — each cites the source paragraphs</h3>';
+  if(!c.qa.length)return '<section><div class="pending">No questions for this unit.</div></section>';
+  const done=qaDone(c);
+  let h=`<h3 class="sec">Questions &amp; answers<span class="r">${done} of ${c.qa.length} read`
+   +(done<c.qa.length?` · <a class="key" href="#" data-next="1">next unread</a>`:'')+`</span></h3><section>`;
   c.qa.forEach((q,k)=>{
-    h+=`<details class="qa"${k===0?' open':''}><summary><span class="q">Q${k+1}</span><span>${esc(q.q)}</span></summary><div class="body">`
-     +`<p>${esc(q.a)}</p>`
-     +`<div class="refs"><span class="lbl">Source</span>${(q.refs||[]).map(r=>`<button class="ref" data-goto="${r}">§${r}</button>`).join('')}</div>`
-     +'</div></details>';
+    const id=c.i+'.'+k, isDone=!!readQ[id];
+    h+=`<details class="qa${isDone?' done':''}" data-q="${k}"${k===0&&!isDone?' open':''}>`
+     +`<summary><span class="q">Q${k+1}</span><span>${esc(q.q)}</span><span class="tick">✓</span></summary>`
+     +`<div class="body"><p>${esc(q.a)}</p>`
+     +`<div class="refs"><span class="lbl">Source</span>`
+     +(q.refs||[]).map(r=>`<button class="ref" data-goto="${r}">§${r}</button>`).join('')+`</div></div></details>`;
   });
   return h+'</section>';
 }
 function renderFull(c){
-  return '<section><h3 class="sec">Full text, paragraph by paragraph</h3>'
+  const g=gapCount(c);
+  return '<section><h3 class="sec">Full text, paragraph by paragraph'
+   +(g?`<span class="r">${g} paragraph${g>1?'s':''} not yet translated</span>`:'')+'</h3>'
    +c.blocks.map((b,i)=>blockHTML(b,i)).join('')+'</section>';
 }
+function prevNext(c){
+  const order=CH.map(x=>x.i), k=order.indexOf(c.i);
+  const p=k>0?CH[order[k-1]]:null, n=k<order.length-1?CH[order[k+1]]:null;
+  return `<div class="prevnext">
+   ${p?`<button data-go="${p.i}"><span class="k">Previous</span>${esc(p.title)}</button>`:'<button disabled></button>'}
+   ${n?`<button data-go="${n.i}"><span class="k">Next</span>${esc(n.title)}</button>`:'<button disabled></button>'}</div>`;
+}
+
+/* ---------- overview ---------- */
 function renderOverview(){
   const done=CH.filter(c=>c.guide).length;
+  const r=store.get('resume',null);
   let h=`<div class="chead"><div class="num">English edition · built only from the folder you gave</div>
    <h2>The Diamond Sutra</h2>
    <div class="tnote">Vajra Prajnaparamita — a reading dashboard with guides, Q&amp;A and traceable sources</div>
-   <div class="srcline">Single source of truth: the Google Drive folder you provided — ${D.source.dirs} folders, ${D.source.files} files.
-   Each section uses the <b>most recent dated draft</b> in its folder; the filename and date are shown at the top of every section.
-   Only the English of those files is published here. Every paragraph is numbered, so anything said in a guide or an answer can be checked against the source.</div></div>
-   <p class="lead">Pick the preface or any of the thirty-two sections on the left. Each has four tabs:
-   <b>Guide</b> (what the section is doing), <b>Sutra text</b> (the passage itself),
-   <b>Q&amp;A</b> (with §-numbered citations you can click), and <b>Full text</b> (the whole draft, paragraph by paragraph).
-   Guides and Q&amp;A are finished for ${done} of ${CH.length} sections; the rest are on the way.</p>
-   <div class="grid">`;
-  CH.forEach(c=>{
-    h+=`<button class="card" data-c="${c.i}">
-      <div class="n">${esc(c.label)}</div>
-      <h4>${esc(c.title)}</h4>
-      <div class="dt">${c.date} · ${c.guide?'<b>guide + Q&amp;A</b>':'text only'}</div>
-    </button>`;
+   <div class="oneline">Thirty-two short sections, each with a guide that says what it is doing, the passage
+   itself, questions whose every answer cites the paragraph it rests on, and the full draft.</div>
+   <div class="srcline">Single source of truth: the Google Drive folder you provided — ${D.source.dirs} folders,
+   ${D.source.files} files. Each section uses the <b>most recent dated draft</b> in its folder. Only the
+   English of those files is published here.</div></div>`;
+  h+='<p class="lead">';
+  if(r&&CH[r.ci]) h+=`<button class="bigbtn" data-go="${r.ci}" data-tab="${r.tab}">Continue — ${esc(CH[r.ci].title)}${r.blk?' §'+r.blk:''}</button>`;
+  h+=`<button class="bigbtn" data-go="0">Start at the beginning</button>`
+   +`<a class="bigbtn" href="#themes">All key points</a><a class="bigbtn" href="#sutra-only">Sutra only</a></p>`;
+  h+=`<p class="hint">Guides and Q&amp;A are finished for ${done} of ${CH.length} units · ${CH.reduce((s,c)=>s+c.qa.length,0)} questions in all.</p>`;
+  STAGES.forEach(s=>{
+    h+=`<div class="stage"><div class="h">${s.k}</div><h4>${esc(s.t)}</h4><p>${esc(s.p)}</p><div class="grid">`;
+    CH.filter(c=>c.num>=s.a&&c.num<=s.b).forEach(c=>{
+      h+=`<button class="card${seen[c.i]?' read':''}" data-go="${c.i}">
+        <div class="n">${esc(c.label)}</div><h4>${esc(c.title)}</h4>
+        <div class="dt">${c.qa.length} questions${seen[c.i]?' · opened':''}</div></button>`});
+    h+='</div></div>';
   });
-  return h+'</div>';
+  return h;
 }
-function renderSearch(k){
-  const kw=k.trim(); if(!kw)return '';
-  const low=kw.toLowerCase(), out=[];
-  CH.forEach(c=>{
-    c.blocks.forEach((b,i)=>{
-      const p=(b.en||'').toLowerCase().indexOf(low);
-      if(p>=0&&out.length<200)out.push({c,i,txt:b.en,p,where:'Full text'});
-    });
-    (c.qa||[]).forEach(q=>{
-      const t=q.q+' — '+q.a, p=t.toLowerCase().indexOf(low);
-      if(p>=0&&out.length<200)out.push({c,i:null,txt:t,p,where:'Q&A'});
-    });
-    if(c.guide){const p=c.guide.toLowerCase().indexOf(low);
-      if(p>=0)out.push({c,i:null,txt:c.guide,p,where:'Guide'});}
+function renderThemes(){
+  let h=`<div class="chead"><div class="num">Index</div><h2>Key points across the whole sutra</h2>
+   <div class="oneline">Every key point named in the guides, in order. Sections that turn on the same idea
+   sit next to each other here even when they are far apart in the text.</div></div><section>`;
+  const rows=[];
+  CH.forEach(c=>(c.keys||[]).forEach(k=>rows.push({c,k})));
+  rows.sort((a,b)=>a.k.localeCompare(b.k));
+  h+='<div class="keys" style="display:block">';
+  rows.forEach(r=>{h+=`<div style="padding:.45rem 0;border-bottom:1px solid var(--line2)">
+    <a class="key" href="#s${r.c.i}/guide">${esc(r.k)}</a>
+    <span class="hint" style="margin-left:.5rem">${esc(r.c.label)} · ${esc(r.c.title)}</span></div>`});
+  return h+'</div></section>';
+}
+function renderSutraOnly(){
+  let h=`<div class="chead"><div class="num">Continuous reading</div><h2>The sutra text alone</h2>
+   <div class="oneline">All thirty-two passages in sequence, with nothing between them — for recitation,
+   memorising, or reading the sutra straight through.</div></div><section>`;
+  CH.filter(c=>c.sutra.length).forEach(c=>{
+    h+=`<h3 class="sec">${esc(c.label)} · ${esc(c.title)}<span class="r"><a class="key" href="#s${c.i}/guide">guide</a></span></h3>`;
+    c.sutra.forEach(s=>{h+=`<div class="blk sutra"><span class="tx">${esc(s)}</span></div>`});
   });
+  return h+'</section>';
+}
+
+/* ---------- search ---------- */
+function renderSearch(kw){
+  const low=kw.trim().toLowerCase();if(!low)return '';
+  const hits=[];
+  CH.forEach(c=>{
+    if(c.guide&&c.guide.toLowerCase().includes(low))hits.push({c,where:'Guide',tab:'guide',txt:c.guide,p:c.guide.toLowerCase().indexOf(low)});
+    (c.qa||[]).forEach((q,k)=>{const t=q.q+' — '+q.a,p=t.toLowerCase().indexOf(low);
+      if(p>=0)hits.push({c,where:'Q&A',tab:'qa',txt:t,p,q:k})});
+    c.blocks.forEach((b,i)=>{const p=(b.en||'').toLowerCase().indexOf(low);
+      if(p>=0)hits.push({c,where:b.t==='sutra'?'Sutra':'Full text',tab:'full',txt:b.en,p,blk:i})});
+  });
+  const f=state.filter, shown=hits.filter(h=>f==='all'||(f==='sutra'?h.where==='Sutra':h.where.toLowerCase().startsWith(f)));
+  const bySec={};shown.forEach(h=>{(bySec[h.c.i]=bySec[h.c.i]||[]).push(h)});
+  const counts={all:hits.length,guide:hits.filter(h=>h.where==='Guide').length,
+    'q&a':hits.filter(h=>h.where==='Q&A').length,sutra:hits.filter(h=>h.where==='Sutra').length,
+    full:hits.filter(h=>h.where==='Full text').length};
   let h=`<div class="chead"><div class="num">Search</div><h2>“${esc(kw)}”</h2>
-    <div class="srcline">${out.length} match${out.length===1?'':'es'}${out.length>=200?' (showing the first 200)':''}</div></div>`;
-  if(!out.length)h+='<p class="hint">Nothing found. Try a shorter phrase — “giving”, “Subhuti”, “dwell”.</p>';
-  out.forEach(r=>{
-    const s=Math.max(0,r.p-70),e=Math.min(r.txt.length,r.p+kw.length+110);
-    const frag=esc(r.txt.slice(s,r.p))+'<mark>'+esc(r.txt.substr(r.p,kw.length))+'</mark>'+esc(r.txt.slice(r.p+kw.length,e));
-    h+=`<button class="res" data-c="${r.c.i}" data-b="${r.i===null?'':r.i}" data-w="${r.where}">
-      <div class="h">${esc(r.c.label)} · ${esc(r.c.title)} · ${r.where}${r.i!==null?' §'+r.i:''}</div>
-      <div class="t">…${frag}…</div></button>`;
+    <div class="srcline">${shown.length} of ${hits.length} matches in ${Object.keys(bySec).length} units</div>
+    <div class="filters">`+[['all','Everything'],['guide','Guides'],['q&a','Q&A'],['sutra','Sutra'],['full','Full text']]
+      .map(([k,n])=>`<button class="tool ${f===k?'on':''}" data-f="${k}">${n} ${counts[k]||0}</button>`).join('')
+    +`</div></div>`;
+  if(!shown.length)h+='<p class="hint">Nothing found. Try a shorter phrase — “giving”, “Subhuti”, “dwell”, “Kali”.</p>';
+  Object.keys(bySec).forEach(ci=>{
+    const c=CH[ci];h+=`<h3 class="sec">${esc(c.label)} · ${esc(c.title)}<span class="r">${bySec[ci].length}</span></h3>`;
+    bySec[ci].slice(0,12).forEach(r=>{
+      const s=Math.max(0,r.p-70),e=Math.min(r.txt.length,r.p+low.length+120);
+      const frag=esc(r.txt.slice(s,r.p))+'<mark>'+esc(r.txt.substr(r.p,low.length))+'</mark>'+esc(r.txt.slice(r.p+low.length,e));
+      h+=`<button class="res" data-c="${c.i}" data-tab="${r.tab}" data-blk="${r.blk===undefined?'':r.blk}" data-q="${r.q===undefined?'':r.q}">
+        <div class="h">${r.where}${r.blk!==undefined?' §'+r.blk:''}${r.q!==undefined?' Q'+(r.q+1):''}</div>
+        <div class="t">…${frag}…</div></button>`});
+    if(bySec[ci].length>12)h+=`<p class="hint">…and ${bySec[ci].length-12} more in this unit</p>`;
   });
   return h;
 }
 
+/* ---------- routing ---------- */
+function push(blk){
+  const h=state.ci<0?'':`#s${state.ci}/${state.tab}`+(blk!==undefined&&blk!==null?'/'+blk:'');
+  if(location.hash!==h) history.replaceState(null,'',h||location.pathname);
+}
 function render(){
   buildTabs();markNav();
   const v=$('#view');
-  if(state.q){v.innerHTML=renderSearch(state.q);
-    v.querySelectorAll('.res').forEach(b=>b.onclick=()=>{
-      const w=b.dataset.w; state.q='';$('#q').value='';
-      state.tab = w==='Q&A'?'qa':w==='Guide'?'guide':'full';
-      go(+b.dataset.c, b.dataset.b===''?null:+b.dataset.b);});
-    return;}
-  if(state.ci<0){v.innerHTML=renderOverview();
-    v.querySelectorAll('.card').forEach(b=>b.onclick=()=>go(+b.dataset.c));return;}
+  if(state.q){v.innerHTML=renderSearch(state.q);bind(v);return}
+  if(state.view==='themes'){v.innerHTML=renderThemes();bind(v);return}
+  if(state.view==='sutra-only'){v.innerHTML=renderSutraOnly();bind(v);return}
+  if(state.ci<0){v.innerHTML=renderOverview();bind(v);return}
   const c=CH[state.ci];
+  seen[c.i]=1;store.set('seen',seen);
   v.innerHTML=head(c)+(state.tab==='guide'?renderGuide(c):state.tab==='sutra'?renderSutra(c):
-    state.tab==='qa'?renderQA(c):renderFull(c));
+    state.tab==='qa'?renderQA(c):renderFull(c))+prevNext(c);
+  bind(v);
+}
+function bind(v){
   v.querySelectorAll('[data-goto]').forEach(b=>b.onclick=()=>jump(+b.dataset.goto));
+  v.querySelectorAll('[data-go]').forEach(b=>b.onclick=()=>{
+    if(b.dataset.tab)state.tab=b.dataset.tab;go(+b.dataset.go)});
+  v.querySelectorAll('[data-tab]').forEach(b=>{if(b.dataset.go)return;
+    b.onclick=()=>{state.tab=b.dataset.tab;push();render();window.scrollTo({top:0})}});
+  v.querySelectorAll('[data-f]').forEach(b=>b.onclick=()=>{state.filter=b.dataset.f;render()});
+  v.querySelectorAll('[data-key]').forEach(b=>b.onclick=e=>{e.preventDefault();
+    $('#q').value=b.dataset.key;state.q=b.dataset.key;state.filter='all';state.view=null;render()});
+  v.querySelectorAll('[data-mark]').forEach(b=>b.onclick=()=>{
+    const k=state.ci+'.'+b.dataset.mark;marks[k]=!marks[k];store.set('marks',marks);
+    b.closest('.blk').classList.toggle('marked',!!marks[k])});
+  v.querySelectorAll('[data-next]').forEach(b=>b.onclick=e=>{e.preventDefault();
+    const c=CH[state.ci],k=c.qa.findIndex((_,i)=>!readQ[c.i+'.'+i]);
+    if(k>=0){const d=v.querySelector(`details[data-q="${k}"]`);if(d){d.open=true;
+      d.scrollIntoView({behavior:'smooth',block:'center'})}}});
+  v.querySelectorAll('details.qa').forEach(d=>d.addEventListener('toggle',()=>{
+    if(!d.open)return;const c=CH[state.ci],id=c.i+'.'+d.dataset.q;
+    readQ[id]=1;store.set('readQ',readQ);d.classList.add('done');buildTabs()}));
+  v.querySelectorAll('.res').forEach(b=>b.onclick=()=>{
+    state.q='';$('#q').value='';state.tab=b.dataset.tab;
+    go(+b.dataset.c,b.dataset.blk===''?null:+b.dataset.blk);
+    if(b.dataset.q!==''){setTimeout(()=>{const d=$(`details[data-q="${b.dataset.q}"]`);
+      if(d){d.open=true;d.scrollIntoView({behavior:'smooth',block:'center'})}},60)}});
 }
 function jump(n){
   state.tab='full';render();
   requestAnimationFrame(()=>{const el=document.getElementById('b'+n);
     if(el){el.scrollIntoView({behavior:'smooth',block:'center'});
-      el.classList.remove('hit');void el.offsetWidth;el.classList.add('hit');}});
+      el.classList.remove('hit');void el.offsetWidth;el.classList.add('hit');push(n)}});
 }
-function go(ci,block){
-  state.ci=ci;window.scrollTo({top:0});render();
-  if(block!==null&&block!==undefined)jump(block);
-  location.hash=ci<0?'':'s'+ci;
+function go(ci,blk){
+  state.view=null;state.ci=ci;window.scrollTo({top:0});render();push();
+  if(blk!==null&&blk!==undefined)jump(blk);
+  if(ci>=0)store.set('resume',{ci,tab:state.tab,blk:blk||0});
 }
-$('#q').addEventListener('input',e=>{state.q=e.target.value;render();});
+function fromHash(){
+  const m=(location.hash||'').match(/^#s(\d+)(?:\/(\w+))?(?:\/(\d+))?$/);
+  if(location.hash==='#themes'){state.view='themes';state.ci=-1;render();return}
+  if(location.hash==='#sutra-only'){state.view='sutra-only';state.ci=-1;render();return}
+  if(m){state.view=null;state.ci=+m[1];if(m[2])state.tab=m[2];render();
+    if(m[3])jump(+m[3]);return}
+  state.view=null;state.ci=-1;render();
+}
+$('#q').addEventListener('input',e=>{state.q=e.target.value;state.view=null;render()});
+$('#q').addEventListener('keydown',e=>{if(e.key==='Escape'){e.target.value='';state.q='';render()}});
+document.addEventListener('keydown',e=>{
+  if(e.key==='/'&&document.activeElement!==$('#q')){e.preventDefault();$('#q').focus()}
+  if(state.ci>=0&&!e.metaKey&&!e.ctrlKey&&document.activeElement!==$('#q')){
+    const order=CH.map(x=>x.i),k=order.indexOf(state.ci);
+    if(e.key==='j'&&k<order.length-1)go(order[k+1]);
+    if(e.key==='k'&&k>0)go(order[k-1]);}
+});
+addEventListener('hashchange',fromHash);
+let sTimer;addEventListener('scroll',()=>{clearTimeout(sTimer);sTimer=setTimeout(()=>{
+  if(state.ci<0||state.q)return;
+  let near=0;document.querySelectorAll('.blk').forEach(el=>{
+    if(el.getBoundingClientRect().top<180)near=+el.id.slice(1)||near});
+  store.set('resume',{ci:state.ci,tab:state.tab,blk:near});},400)});
 
 buildNav();
-document.documentElement.style.setProperty('--fs',(localStorage.getItem('fs')||20)+'px');
-const m=(location.hash||'').match(/^#s(\d+)$/);
-go(m?+m[1]:-1);
+setTheme(store.get('theme','paper'));setFont(store.get('font','serif'));
+document.documentElement.style.setProperty('--fs',store.get('fs',20)+'px');
+fromHash();
 </script>
 </body>
 </html>
