@@ -10,6 +10,9 @@ shown at the top of every section. Only the English of those files is published.
 
 Static site: `index.html` + `data.js`. No build step, no external requests.
 
+**Chinese edition** of the same course book (password protected while the book is in press):
+https://twnyda07.github.io/diamond-sutra-zh/
+
 ---
 
 © 2026 Bao Yan Chan Monastery, Bao Yan Mountain. All rights reserved.
