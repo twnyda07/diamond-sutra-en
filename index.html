@@ -242,15 +242,13 @@ footer ul{margin:.4rem 0 0;padding-left:1.05rem}
       <li><b>Translation:</b> Sutra Translation Institute, Bao Yan Chan Monastery</li>
       <li><b>Published and distributed by:</b> Bao Yan Chan Monastery, Bao Yan Mountain</li>
     </ul>
-    <div style="margin-top:.65rem">Sutra passages follow the renderings used in the source drafts, which
-    credit Buddha's Light Publishing (Fo Guang Shan) as a reference. This dashboard reproduces the English
-    text of those drafts and adds editorial guides and questions.</div>
+    <div style="margin-top:.65rem">Sutra passages credit Buddha's Light Publishing (Fo Guang Shan) as a
+    reference for their English rendering.</div>
     <ul>
-      <li>Working drafts, not a final published edition: wording, section titles and untranslated gaps
-          reflect the state of each file on its stated date.</li>
       <li>Freely readable for personal study and Dharma circulation. No commercial use, reprinting or
           redistribution without written permission.</li>
-      <li>Guides and Q&amp;A are editorial summaries of the drafts, each citing the paragraph it rests on.</li>
+      <li>The guides and questions are editorial, and each cites the paragraph it rests on.</li>
+      <li>A small number of paragraphs are not yet available in English and are marked as such.</li>
       <li>Chinese edition of the same course book:
         <a href="https://twnyda07.github.io/diamond-sutra-zh/">剛剛好的般若－好好讀金剛經</a>
         (password protected while the book is in press)</li>
@@ -334,23 +332,22 @@ $('#menuBtn').onclick=()=>$('#side').classList.toggle('open');
 function blockHTML(b,i){
   const id='b'+i, m=marks[state.ci+'.'+i]?' marked':'';
   if(b.gap) return `<div class="blk gap${m}" id="${id}"><a class="anchor" href="#s${state.ci}/full/${i}">§${i}</a>`
-    +`<span class="tx">[present in the source file, not yet translated]</span></div>`;
+    +`<span class="tx">[not yet available in English]</span></div>`;
   const cls=b.t==='heading'?'heading':b.t==='sutra'?'sutra':b.t==='verse'?'verse':'para';
   return `<div class="blk ${cls}${m}" id="${id}">`
     +`<button class="mark-btn" data-mark="${i}" title="Bookmark this paragraph">◆</button>`
     +`<a class="anchor" href="#s${state.ci}/full/${i}">§${i}</a><span class="tx">${esc(b.en)}</span></div>`;
 }
 function srcLine(c){
-  const pct=Math.round(100*c.nEn/c.nBlk), g=gapCount(c);
-  return `<div class="srcline">Source file dated ${c.date} — the most recent draft in this section's folder,
-   named in Drive as <code>${esc(c.file)}</code>. English reproduced as written there; ${pct}% of paragraphs
-   carry a translation${g?`, ${g} not yet`:''}. Paragraphs are numbered <code>§n</code>; the chips in the
-   guide and Q&amp;A jump to them, and every <code>§n</code> is a shareable link.</div>`;
+  const g=gapCount(c);
+  return `<div class="srcline">Every paragraph below is numbered <code>§n</code>. The chips in the guide
+   and the Q&amp;A jump straight to the paragraph they rest on, and each <code>§n</code> is a link you can share.
+   ${g?`Some paragraphs of this section are not yet available in English.`:''}</div>`;
 }
 function head(c){
   const st=stageOf(c.num);
   return `<div class="chead">
-    <div class="num">${esc(c.label)}${st?' · '+esc(st.k):''} · ${c.date}</div>
+    <div class="num">${esc(c.label)}${st?' · '+esc(st.k):''}</div>
     <h2>${esc(c.title)}</h2>
     ${c.tnote?`<div class="tnote">${esc(c.tnote)}</div>`:''}
     ${c.guide?`<div class="oneline">${esc(firstSentence(c.guide))}</div>`:''}
@@ -362,7 +359,6 @@ function renderGuide(c){
   if(!c.guide){h+='<div class="pending">No guide for this unit.</div>'}
   else{
     h+='<h3 class="sec">Guide</h3><div class="guide"><p>'+esc(c.guide)+'</p></div>';
-    if(c.note)h+=`<div class="note"><b>About this draft: </b>${esc(c.note)}</div>`;
     if(c.keys.length)h+='<h3 class="sec">Key points<span class="r">tap to find every section that turns on the same idea</span></h3>'
       +'<div class="keys">'+c.keys.map(k=>`<a class="key" href="#" data-key="${esc(k)}">${esc(k)}</a>`).join('')+'</div>';
     if(qaCount(c))h+=`<h3 class="sec">Next</h3><button class="bigbtn" data-tab="qa">Work through the ${qaCount(c)} questions →</button>`
@@ -394,7 +390,7 @@ function renderQA(c){
 function renderFull(c){
   const g=gapCount(c);
   return '<section><h3 class="sec">Full text, paragraph by paragraph'
-   +(g?`<span class="r">${g} paragraph${g>1?'s':''} not yet translated</span>`:'')+'</h3>'
+   +(g?`<span class="r">${g} paragraph${g>1?'s':''} not yet in English</span>`:'')+'</h3>'
    +c.blocks.map((b,i)=>blockHTML(b,i)).join('')+'</section>';
 }
 function prevNext(c){
@@ -409,25 +405,24 @@ function prevNext(c){
 function renderOverview(){
   const done=CH.filter(c=>c.guide).length;
   const r=store.get('resume',null);
-  let h=`<div class="chead"><div class="num">English edition · built only from the folder you gave</div>
+  let h=`<div class="chead"><div class="num">English edition</div>
    <h2>The Diamond Sutra</h2>
-   <div class="tnote">Vajra Prajnaparamita — a reading dashboard with guides, Q&amp;A and traceable sources</div>
-   <div class="oneline">Thirty-two short sections, each with a guide that says what it is doing, the passage
-   itself, questions whose every answer cites the paragraph it rests on, and the full draft.</div>
-   <div class="srcline">Single source of truth: the Google Drive folder you provided — ${D.source.dirs} folders,
-   ${D.source.files} files. Each section uses the <b>most recent dated draft</b> in its folder. Only the
-   English of those files is published here.</div></div>`;
+   <div class="tnote">Vajra Prajnaparamita — a reading dashboard with guides, questions and citations</div>
+   <div class="oneline">Thirty-two short sections, each with a guide that says what the section is doing,
+   the passage itself, questions whose every answer cites the paragraph it rests on, and the whole text.</div>
+   <div class="srcline">Every paragraph is numbered, so anything said in a guide or an answer can be
+   checked against the text it comes from.</div></div>`;
   h+='<p class="lead">';
   if(r&&CH[r.ci]) h+=`<button class="bigbtn" data-go="${r.ci}" data-tab="${r.tab}">Continue — ${esc(CH[r.ci].title)}${r.blk?' §'+r.blk:''}</button>`;
   h+=`<button class="bigbtn" data-go="0">Start at the beginning</button>`
    +`<a class="bigbtn" href="#themes">All key points</a><a class="bigbtn" href="#sutra-only">Sutra only</a></p>`;
-  h+=`<p class="hint">Guides and Q&amp;A are finished for ${done} of ${CH.length} units · ${CH.reduce((s,c)=>s+c.qa.length,0)} questions in all.</p>`;
+  h+=`<p class="hint">${CH.length} units · ${CH.reduce((s,c)=>s+c.qa.length,0)} questions in all.</p>`;
   STAGES.forEach(s=>{
     h+=`<div class="stage"><div class="h">${s.k}</div><h4>${esc(s.t)}</h4><p>${esc(s.p)}</p><div class="grid">`;
     CH.filter(c=>c.num>=s.a&&c.num<=s.b).forEach(c=>{
       h+=`<button class="card${seen[c.i]?' read':''}" data-go="${c.i}">
         <div class="n">${esc(c.label)}</div><h4>${esc(c.title)}</h4>
-        <div class="dt">${c.qa.length} questions${seen[c.i]?' · opened':''}</div></button>`});
+        <div class="dt">${c.qa.length} questions${seen[c.i]?' · read':''}</div></button>`});
     h+='</div></div>';
   });
   return h;

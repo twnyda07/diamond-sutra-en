@@ -1,17 +1,20 @@
 # The Diamond Sutra — Reading Dashboard (English edition)
 
-A reading dashboard for the English drafts of the *Vajra Prajnaparamita* (Diamond Sutra)
-course material: preface plus the thirty-two sections, each with a guide, the sutra passage,
-a Q&A whose every answer cites the source paragraph, and the full draft paragraph by paragraph.
+A reading dashboard for the *Vajra Prajnaparamita* (Diamond Sutra): a preface plus the thirty-two
+sections, each with
 
-**Source of truth.** A single Google Drive folder (33 folders, 125 files). For each section the
-dashboard uses the **most recent dated draft** in that section's folder; the filename and date are
-shown at the top of every section. Only the English of those files is published.
+- **Guide** — what the section is doing, and its key points
+- **Sutra text** — the passage itself
+- **Q&A** — questions whose every answer cites the paragraph it rests on
+- **Full text** — the whole section, paragraph by paragraph, every paragraph numbered `§n`
 
-Static site: `index.html` + `data.js`. No build step, no external requests.
+Also: the four traditional outlines as a way through the whole sutra, a key-point index across all
+sections, all thirty-two passages in one continuous scroll, faceted search, reading position memory,
+paragraph bookmarks, shareable `§n` links, paper / sepia / night, serif / sans and text size.
 
-**Chinese edition** of the same course book (password protected while the book is in press):
-https://twnyda07.github.io/diamond-sutra-zh/
+Static site (`index.html` + `data.js`) — no build step, no network requests, reads offline.
+
+Chinese edition of the same book: https://twnyda07.github.io/diamond-sutra-zh/
 
 ---
 
@@ -21,8 +24,6 @@ https://twnyda07.github.io/diamond-sutra-zh/
 - **Translation:** Sutra Translation Institute, Bao Yan Chan Monastery
 - **Published and distributed by:** Bao Yan Chan Monastery, Bao Yan Mountain
 
-Sutra passages follow the renderings used in the source drafts, which credit Buddha's Light
-Publishing (Fo Guang Shan) as a reference.
-
-These are working drafts, not a final published edition. Freely readable for personal study and
-Dharma circulation; no commercial use, reprinting or redistribution without written permission.
+Sutra passages credit Buddha's Light Publishing (Fo Guang Shan) as a reference for their English
+rendering. Freely readable for personal study and Dharma circulation; no commercial use, reprinting
+or redistribution without written permission.
